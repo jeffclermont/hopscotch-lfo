@@ -50,7 +50,7 @@ function parameters.init()
     controlspec.new(0.01, 10, 'exp', 0.01, 0.1, 'Hz'))
   params:add_control('hs_lfo_depth', 'LFO Depth',
     controlspec.new(0, 1, 'lin', 0.01, 0.5, ''))
-  params:add_option('hs_lfo_shape', 'LFO Shape', {'sine', 'triangle', 'square'}, 1)
+  params:add_option('hs_lfo_shape', 'LFO Shape', {'sine', 'triangle', 'square', 'random'}, 1)
   
   get_midi_devices()
   -- voice sequences

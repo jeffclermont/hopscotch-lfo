@@ -45,6 +45,8 @@ lfo = {
   phase = 0,         -- Current phase of LFO
   shape = "sine",    -- LFO shape (sine, triangle, square)
   enabled = false    -- LFO on/off state
+  random_value = 0,  -- 
+  last_phase = 0     -- 
 }
 
 -- manage sequence state
@@ -61,8 +63,15 @@ function calculate_lfo()
     else
       value = 3 - lfo.phase * 4
     end
-  else -- square
+  elseif shape == 3 then -- square
     value = lfo.phase < 0.5 and 1 or -1
+  else -- random
+    -- Generate new random value when phase cycles
+    if lfo.last_phase and lfo.phase < lfo.last_phase then
+      lfo.random_value = math.random() * 2 - 1
+    end
+    value = lfo.random_value or 0
+    lfo.last_phase = lfo.phase
   end
   
   -- Apply depth

@@ -11,7 +11,18 @@ function interface.draw_clock_div()
     screen.level(2)
   end
   screen.move(1, 64)
-  screen.text(clock_div_options[params:get('hs_clock_division')])
+  
+  -- Get base clock division
+  local base_div = clock_div_options[params:get('hs_clock_division')]
+  
+  -- If LFO is enabled, show modulated value
+  if params:get('hs_lfo_enable') == 1 then
+    local lfo_mult = calculate_lfo()
+    local modulated_div = string.format("%.2f", 1/(lfo_mult * (1/clock_div_values[params:get('hs_clock_division')])))
+    screen.text(base_div .. " (" .. modulated_div .. ")")
+  else
+    screen.text(base_div)
+  end
 end
 
 function interface.draw_gate()
@@ -91,7 +102,7 @@ function interface.draw_lfo()
     screen.level(2)
   end
   screen.move(90, 20)
-  local shapes = {'sin', 'tri', 'sqr'}
+  local shapes = {'sin', 'tri', 'sqr', 'rnd'}
   screen.text(shapes[params:get('hs_lfo_shape')])
   
   -- LFO status indicator
