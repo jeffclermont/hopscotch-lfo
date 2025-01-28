@@ -75,6 +75,7 @@ end
 function play_sequence(seq, voice, vel)
   while true do
     for i=1, #seq do
+      local should_redraw = false
       if seq[i] == 1 then
         local note_val = utils.percentageChance(20) and 
           (voices[voice]["note"] + utils.randomOctave()) or 
@@ -87,11 +88,20 @@ function play_sequence(seq, voice, vel)
           voice
         )
 
-        voice_status[voice] = 1
+        if voice_status[voice] ~= 1 then
+          voice_status[voice] = 1
+          should_redraw = true
+        end
       else
-        voice_status[voice] = 0
+        if voice_status[voice] ~= 0 then
+          voice_status[voice] = 0
+          should_redraw = true
+        end
       end
-      redraw()
+      
+      if should_redraw then
+        redraw()
+      end
       
       -- Calculate base clock time
       local clock_time = clock.get_beat_sec() / clock_div_values[params:get('hs_clock_division')]
@@ -105,11 +115,6 @@ function play_sequence(seq, voice, vel)
         clock.sync(clock_time)
       else 
         clock.sleep(clock_time)
-      end
-      
-      -- Update LFO phase
-      if params:get("hs_lfo_enable") == 1 then
-        lfo.phase = (lfo.phase + params:get("hs_lfo_rate") * clock_time) % 1
       end
     end
   end
@@ -214,12 +219,16 @@ function init()
   midi_in = midi.connect(params:get('hs_midi_input'))
   midi_out = midi.connect(params:get('hs_midi_output'))
   
-  -- Start LFO clock
+  -- Start LFO clock with a slower refresh rate
   clock.run(function()
     while true do
-      clock.sleep(1/100) -- Update LFO at 100Hz
+      clock.sleep(1/15) -- Reduced from 100Hz to 15Hz, still smooth but less CPU intensive
       if params:get("hs_lfo_enable") == 1 then
-        redraw()
+        lfo.phase = (lfo.phase + params:get("hs_lfo_rate") * (1/15)) % 1
+        -- Only redraw if we're showing LFO parameters
+        if selected > #voices + 2 then
+          redraw()
+        end
       end
     end
   end)
