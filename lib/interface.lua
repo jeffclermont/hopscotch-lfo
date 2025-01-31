@@ -85,7 +85,7 @@ function interface.draw_lfo()
   else
     screen.level(2)
   end
-  screen.move(1, 20)
+  screen.move(1, 18)
   screen.text('LFO ' .. string.format("%.2f", params:get('hs_lfo_rate')) .. 'Hz')
   
   if selected == #voices + 4 then
@@ -93,7 +93,7 @@ function interface.draw_lfo()
   else
     screen.level(2)
   end
-  screen.move(50, 20)
+  screen.move(50, 18)
   screen.text('D:' .. string.format("%.2f", params:get('hs_lfo_depth')))
   
   if selected == #voices + 5 then
@@ -101,7 +101,7 @@ function interface.draw_lfo()
   else
     screen.level(2)
   end
-  screen.move(90, 20)
+  screen.move(90, 18)
   local shapes = {'sin', 'tri', 'sqr', 'rnd'}
   screen.text(shapes[params:get('hs_lfo_shape')])
   
