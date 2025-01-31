@@ -45,7 +45,7 @@ function encoder_actions.init(n,d)
     elseif selected == #voices + 5 then
       params:set(
         "hs_lfo_shape",
-        util.clamp(params:get("hs_lfo_shape") + d, 1, 3)
+        util.clamp(params:get("hs_lfo_shape") + d, 1, 4)
       )
     end
   end
