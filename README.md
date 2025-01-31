@@ -1,5 +1,7 @@
 # Hopscotch
 
+**** This is a fork version, I'm experimenting with something, I wanted to add lfo control on the clock speed ****
+
 8-voice MIDI rhythmic arpeggiator for [norns](https://monome.org/norns/). Chat about it over on [lines](https://llllllll.co/t/hopscotch-midi-sequencer-arpeggiator/47655)
 
 ![](img/hopscotch.png)
