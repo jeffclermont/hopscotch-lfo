@@ -44,7 +44,7 @@ lfo = {
   depth = 0.5,       -- Depth of modulation (0-1)
   phase = 0,         -- Current phase of LFO
   shape = "sine",    -- LFO shape (sine, triangle, square)
-  enabled = false    -- LFO on/off state
+  enabled = false,    -- LFO on/off state
   random_value = 0,  -- 
   last_phase = 0     -- 
 }
